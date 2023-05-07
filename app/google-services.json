@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "521239463874",
+    "project_id": "cudeliver-81db2",
+    "storage_bucket": "cudeliver-81db2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521239463874:android:caa2ae2c3780070d54b85b",
+        "android_client_info": {
+          "package_name": "edu.cuhk.cudeliver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "521239463874-gmnvai960uolg6uobh25ttov5p0bk5m0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATZmE6K1DqMzZD_n44kAgvfS5OIewXYJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "521239463874-gmnvai960uolg6uobh25ttov5p0bk5m0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
