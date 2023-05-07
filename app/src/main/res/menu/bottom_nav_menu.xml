@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/orderList"
+        android:title="@string/order_list"
+        android:icon="@drawable/ic_baseline_search_24" />
+    <item android:id="@+id/create"
+        android:title="@string/order_create"
+        android:icon="@drawable/ic_baseline_add_24" />
+    <item android:id="@+id/yourOrder"
+        android:title="@string/your_order"
+        android:icon="@drawable/ic_baseline_checklist_rtl_24" />
+    <item android:id="@+id/orderToDeliver"
+        android:title="@string/order"
+        android:icon="@drawable/ic_baseline_fire_truck_24" />
+</menu>

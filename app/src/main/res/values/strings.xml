@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CUDeliver</string>
+    <string name="your_order">Your Order</string>
+    <string name="order">Order To Deliver</string>
+    <string name="order_list">Order Display</string>
+    <string name="order_create">Create Order</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
 </resources>
