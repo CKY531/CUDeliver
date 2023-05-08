@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_margin="5dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:id="@+id/order_list_item"
+        app:cardCornerRadius="10dp"
+        android:elevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="85dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:text="Order Type" />
+
+                <TextView
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:text="Finish Time:" />
+
+                <TextView
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:text="Order" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="85dp"
+                android:layout_height="55dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/text_order_type"
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:text="Order Type" />
+
+                <TextView
+                    android:id="@+id/text_finish_time"
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:text="Finish Time:" />
+
+                <TextView
+                    android:id="@+id/text_order"
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:text="Order" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>

@@ -1,11 +1,14 @@
 package edu.cuhk.cudeliver;
 
+import androidx.annotation.ContentView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import edu.cuhk.cudeliver.databinding.ActivityOrderBinding;
 
@@ -40,6 +43,12 @@ public class OrderActivity extends AppCompatActivity {
 
             return true;
         });
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.bottom_nav_menu, menu);
+        return true;
     }
 
     //Replace old order fragment with the new one according to the selected item in bottom nav

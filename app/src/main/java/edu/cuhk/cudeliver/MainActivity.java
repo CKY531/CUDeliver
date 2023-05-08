@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         progressDialog.hide();
-                        Utils.showMessage(contentView,"Start activity here: not implemented",Utils.MESSAGE);
+//                        Utils.showMessage(contentView,"Start activity here: not implemented",Utils.MESSAGE);
+                        startActivity(new Intent(MainActivity.this, OrderActivity.class));
                         //TODO: start order activity
                     }
                 }).addOnFailureListener(new OnFailureListener() {
