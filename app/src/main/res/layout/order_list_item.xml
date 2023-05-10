@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:text="Order Type" />
+                    android:text="Status" />
 
                 <TextView
                     android:layout_width="85dp"
@@ -36,7 +36,7 @@
                 <TextView
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:text="Order" />
+                    android:text="Price" />
 
             </LinearLayout>
 
@@ -48,10 +48,10 @@
                 >
 
                 <TextView
-                    android:id="@+id/text_order_type"
+                    android:id="@+id/text_status"
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:text="Order Type" />
+                    android:text="Status" />
 
                 <TextView
                     android:id="@+id/text_finish_time"
@@ -60,10 +60,10 @@
                     android:text="Finish Time:" />
 
                 <TextView
-                    android:id="@+id/text_order"
+                    android:id="@+id/text_price"
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:text="Order" />
+                    android:text="Price" />
 
             </LinearLayout>
 

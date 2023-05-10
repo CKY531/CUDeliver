@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.LinkedList;
+
+import model.Order;
+import model.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,11 +45,11 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private OrderListAdapter mAdapter;
 
-    static LinkedList<String[]> mOrderInfoList = new LinkedList<>();
+    static LinkedList<Order> mOrderInfoList = new LinkedList<>();
 
     private FirebaseDatabase db;
     DatabaseReference users;
-
+    DatabaseReference orders;
     public OrderDisplayFragment() {
         // Required empty public constructor
     }
@@ -66,28 +71,16 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        db = FirebaseDatabase.getInstance("https://cudeliver-81db2-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        db = FirebaseDatabase.getInstance("https://cudeliver-523c3-default-rtdb.asia-southeast1.firebasedatabase.app/");
         users = db.getReference("Users");
+        orders = db.getReference("Orders");
         // dummy data
-        String[] a = {"Dummy0","Dummy1","Dummy2"};
-        mOrderInfoList.add(a);
-        mOrderInfoList.add(a);
-        mOrderInfoList.add(a);
-        mOrderInfoList.add(a);
-        mOrderInfoList.add(a);
-        users.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("DB",snapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
+//        String[] a = {"Dummy0","Dummy1","Dummy2"};
+//        mOrderInfoList.add(a);
+//        mOrderInfoList.add(a);
+//        mOrderInfoList.add(a);
+//        mOrderInfoList.add(a);
+//        mOrderInfoList.add(a);
     }
 
     @Override
@@ -119,6 +112,27 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
                 }
             }
         });
+
+        // update local list by fetching database
+        orders.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mOrderInfoList.clear();
+                for(DataSnapshot postSnapshot: snapshot.getChildren()){
+                    mOrderInfoList.add(postSnapshot.getValue(Order.class));
+                    Log.d("DB",mOrderInfoList.getFirst().getArrTime());
+                }
+                mAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
         return view;
     }
 

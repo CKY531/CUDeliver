@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         contentView = findViewById(android.R.id.content);
 //         init Firebase
         auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
+        db = FirebaseDatabase.getInstance("https://cudeliver-523c3-default-rtdb.asia-southeast1.firebasedatabase.app");
         users = db.getReference("Users");
 
         progressDialog = new ProgressDialog(this);
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                             Utils.showMessage(contentView,"User not found.",Utils.WARNING);
                         }else
                         {
+                            Log.d("AUTH",e.getMessage());
                             Utils.showMessage(contentView,"Unknown error.",Utils.WARNING);
                         }
                     }

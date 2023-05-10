@@ -56,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         contentView = findViewById(android.R.id.content);
 
         auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance("https://cudeliver-81db2-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        db = FirebaseDatabase.getInstance("https://cudeliver-523c3-default-rtdb.asia-southeast1.firebasedatabase.app/");
         users = db.getReference("Users");
 
         // init view
@@ -139,6 +139,12 @@ public class SignUpActivity extends AppCompatActivity {
     public void finish(){
         super.finish();
 //        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        progressDialog.dismiss();
     }
 
 }

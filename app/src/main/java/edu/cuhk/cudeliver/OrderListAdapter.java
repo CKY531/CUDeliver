@@ -1,29 +1,25 @@
 package edu.cuhk.cudeliver;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.LinkedList;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
+
+import model.Order;
 
 public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder>  {
     private Context context;
     private LayoutInflater mInflater;
 
-    private LinkedList<String[]> mOrderInfoList;
+    private LinkedList<Order> mOrderInfoList;
 
     class OrderViewHolder extends RecyclerView.ViewHolder {
 
@@ -37,8 +33,8 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
         public OrderViewHolder(View itemView, OrderListAdapter adapter) {
             super(itemView);
 //            flowerImageItemView = itemView.findViewById(R.id.image);
-            mOrder = itemView.findViewById(R.id.text_order);
-            mOrderType = itemView.findViewById(R.id.text_order_type);
+            mOrder = itemView.findViewById(R.id.text_price);
+            mOrderType = itemView.findViewById(R.id.text_status);
             mTime = itemView.findViewById(R.id.text_finish_time);
             this.mAdapter = adapter;
 //
@@ -61,7 +57,7 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
     }
 
     public OrderListAdapter(Context context,
-                            LinkedList<String[]> mOrderInfoList) {
+                            LinkedList<Order> mOrderInfoList) {
         mInflater = LayoutInflater.from(context);
         this.mOrderInfoList = mOrderInfoList;
     }
@@ -76,23 +72,23 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        String type = (mOrderInfoList.get(position))[0];
-        String time = (mOrderInfoList.get(position))[1];
-        String order = (mOrderInfoList.get(position))[2];
+        String status = (mOrderInfoList.get(position)).getStatus();
+        String time = (mOrderInfoList.get(position)).getArrTime();
+        double price = (mOrderInfoList.get(position)).getPrice();
 //        Uri uri = Uri.parse(mImagePath);
 //        System.out.println("path:" + mImagePath);
         // Update the following to display correct information based on the given position
 
 
         // Set up View items for this row (position), modify to show correct information read from the CSV
-        holder.mOrderType.setText(type);
-        holder.mOrder.setText(order);
+        holder.mOrderType.setText(status);
+        holder.mOrder.setText("$"+String.valueOf(price));
         holder.mTime.setText(time);
 //        holder.flowerImageItemView.setImageURI(uri);
 
     }
 
-    public void updateInfo(LinkedList<String[]>mOrderInfoList)
+    public void updateInfo(LinkedList<Order>mOrderInfoList)
     {
         this.mOrderInfoList = mOrderInfoList;
         notifyDataSetChanged();

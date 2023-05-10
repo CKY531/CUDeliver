@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import java.util.LinkedList;
 
+import model.Order;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link OrderDisplayFragment#newInstance} factory method to
@@ -32,7 +34,7 @@ public class OrderToDeliverFragment extends Fragment implements SwipeRefreshLayo
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private OrderListAdapter mAdapter;
 
-    static LinkedList<String[]> mOrderInfoList = new LinkedList<>();
+    static LinkedList<Order> mOrderInfoList = new LinkedList<>();
 
     public OrderToDeliverFragment() {
         // Required empty public constructor
@@ -55,12 +57,12 @@ public class OrderToDeliverFragment extends Fragment implements SwipeRefreshLayo
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
         // dummy data
-        String[] a = {"Dummy0","Dummy1","Dummy2"};
-        mOrderInfoList.add(a);
-        mOrderInfoList.add(a);
-        mOrderInfoList.add(a);
-        mOrderInfoList.add(a);
-        mOrderInfoList.add(a);
+//        String[] a = {"Dummy0","Dummy1","Dummy2"};
+//        mOrderInfoList.add(a);
+//        mOrderInfoList.add(a);
+//        mOrderInfoList.add(a);
+//        mOrderInfoList.add(a);
+//        mOrderInfoList.add(a);
 
 
 

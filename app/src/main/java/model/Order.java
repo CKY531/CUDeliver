@@ -145,6 +145,10 @@ public class Order {
         this.status = status;
     }
 
+    public Order(){
+
+    }
+
     public Order(double startLat, double startLong, double destinationLat, double destinationLong, String startName, String destinationName, String startTime, String arrTime, double price, String contact, String orderCreator, String orderDeliver, String status) {
         this.startLat = startLat;
         this.startLong = startLong;
