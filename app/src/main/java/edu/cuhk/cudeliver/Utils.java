@@ -10,11 +10,24 @@ public class Utils {
     public static final int MESSAGE = 0;
     public static final int WARNING = 1;
     public static final int CAUTION = 2;
+    public static final int NEUTRAL = 3;
 
-    public static void inputValidate(String email,String password1, String password2) throws Exception {
+
+    public static void inputValidate(String email,String phone,String password1, String password2) throws Exception {
         if (email.length() == 0) {
             throw new Exception( "Email should not be empty");
         }
+
+        if (phone.length() == 0)
+        {
+            throw new Exception("Phone number not be empty");
+        }
+
+        if (phone.length() != 8)
+        {
+            throw new Exception("Invalid HK phone number");
+        }
+
         if (password1.length() < 8) {
             throw new Exception("Password too short");
         }
@@ -43,6 +56,11 @@ public class Utils {
                 break;
             case MESSAGE:
                 s.setBackgroundTint(Color.rgb(0,250,154)); // light green
+                s.setTextColor(Color.BLACK);
+                break;
+            case NEUTRAL:
+                s.setBackgroundTint(Color.rgb(237,237,237));
+                s.setDuration(1000);
                 s.setTextColor(Color.BLACK);
                 break;
             default:
