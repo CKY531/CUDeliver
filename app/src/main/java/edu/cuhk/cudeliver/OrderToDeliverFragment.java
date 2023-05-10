@@ -2,6 +2,7 @@ package edu.cuhk.cudeliver;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -82,6 +83,17 @@ public class OrderToDeliverFragment extends Fragment implements SwipeRefreshLayo
         mAdapter = new OrderListAdapter(getContext(), mOrderInfoList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mOrderInfoList.size() - 1)
+                {
+                    Utils.showMessage((View) getActivity().findViewById(android.R.id.content),"Reached bottom",Utils.NEUTRAL);
+                }
+            }
+        });
         return view;
     }
 
