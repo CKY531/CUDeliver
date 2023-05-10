@@ -1,29 +1,36 @@
 package edu.cuhk.cudeliver;
 
-import androidx.annotation.ContentView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import edu.cuhk.cudeliver.databinding.ActivityOrderBinding;
 
 public class OrderActivity extends AppCompatActivity {
 
     ActivityOrderBinding orderBinding;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         orderBinding = ActivityOrderBinding.inflate(getLayoutInflater());
         setContentView(orderBinding.getRoot());
+        auth = FirebaseAuth.getInstance();
         replaceFrag(new OrderDisplayFragment());
 
-        //Add Listener to listen to bottom nav bar
+//        //Add Listener to listen to bottom nav bar
         orderBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
@@ -47,8 +54,32 @@ public class OrderActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.bottom_nav_menu, menu);
+        inflater.inflate(R.menu.user_option_menu, menu);
         return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.option_change_password:
+                Log.d("USER", String.valueOf(auth.getCurrentUser()));
+//                changePassword();
+                return true;
+
+            case R.id.option_logout:
+                auth.signOut();
+                Log.d("USER", String.valueOf(auth.getCurrentUser()));
+                Intent intent = new Intent(OrderActivity.this,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finishAffinity();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     //Replace old order fragment with the new one according to the selected item in bottom nav

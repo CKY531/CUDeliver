@@ -70,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onSuccess(AuthResult authResult) {
                         progressDialog.hide();
 //                        Utils.showMessage(contentView,"Start activity here: not implemented",Utils.MESSAGE);
-                        startActivity(new Intent(MainActivity.this, OrderActivity.class));
-                        //TODO: start order activity
+                        Intent intent = new Intent(MainActivity.this, OrderActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                        finishAffinity();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -98,5 +100,20 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, SignUpActivity.class));
 //                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
         });
+    }
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        if (auth.getCurrentUser()!=null) {
+            startActivity(new Intent(MainActivity.this, OrderActivity.class));
+            finishAffinity();
+        }
     }
 }
