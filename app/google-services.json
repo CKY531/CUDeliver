@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "521239463874",
-    "project_id": "cudeliver-81db2",
-    "storage_bucket": "cudeliver-81db2.appspot.com"
+    "project_number": "25206511771",
+    "firebase_url": "https://cudeliver-523c3-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "cudeliver-523c3",
+    "storage_bucket": "cudeliver-523c3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:521239463874:android:caa2ae2c3780070d54b85b",
+        "mobilesdk_app_id": "1:25206511771:android:ec933a0d76c1f9ae1f4e3e",
         "android_client_info": {
           "package_name": "edu.cuhk.cudeliver"
         }
       },
       "oauth_client": [
         {
-          "client_id": "521239463874-gmnvai960uolg6uobh25ttov5p0bk5m0.apps.googleusercontent.com",
+          "client_id": "25206511771-po23aa6t3hg4a65dbtfledd7gm7i0p4a.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyATZmE6K1DqMzZD_n44kAgvfS5OIewXYJY"
+          "current_key": "AIzaSyDnGtKre8Urmxg1sgL1BmlWvhiDfosNUx4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "521239463874-gmnvai960uolg6uobh25ttov5p0bk5m0.apps.googleusercontent.com",
+              "client_id": "25206511771-po23aa6t3hg4a65dbtfledd7gm7i0p4a.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -11,10 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.LinkedList;
 
@@ -34,6 +41,9 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
     private OrderListAdapter mAdapter;
 
     static LinkedList<String[]> mOrderInfoList = new LinkedList<>();
+
+    private FirebaseDatabase db;
+    DatabaseReference users;
 
     public OrderDisplayFragment() {
         // Required empty public constructor
@@ -55,6 +65,9 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        db = FirebaseDatabase.getInstance("https://cudeliver-81db2-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        users = db.getReference("Users");
         // dummy data
         String[] a = {"Dummy0","Dummy1","Dummy2"};
         mOrderInfoList.add(a);
@@ -62,7 +75,17 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
         mOrderInfoList.add(a);
         mOrderInfoList.add(a);
         mOrderInfoList.add(a);
+        users.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("DB",snapshot.getValue().toString());
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
     }
@@ -92,7 +115,7 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
                 super.onScrolled(recyclerView, dx, dy);
                 if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mOrderInfoList.size() - 1)
                 {
-                    Utils.showMessage((View) getActivity().findViewById(android.R.id.content),"Reached bottom",Utils.MESSAGE);
+                    Utils.showMessage((View) getActivity().findViewById(android.R.id.content),"Reached bottom",Utils.NEUTRAL);
                 }
             }
         });

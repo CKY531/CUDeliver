@@ -30,9 +30,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import model.User;
+
 public class SignUpActivity extends AppCompatActivity {
 
     EditText email;
+    EditText phone;
     EditText password1;
     EditText password2;
     Button signupBtn;
@@ -53,11 +56,12 @@ public class SignUpActivity extends AppCompatActivity {
         contentView = findViewById(android.R.id.content);
 
         auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
+        db = FirebaseDatabase.getInstance("https://cudeliver-81db2-default-rtdb.asia-southeast1.firebasedatabase.app/");
         users = db.getReference("Users");
 
         // init view
         email = findViewById(R.id.email);
+        phone = findViewById(R.id.phone);
         password1 = findViewById(R.id.password1);
         password2 = findViewById(R.id.password2);
         signupBtn = findViewById(R.id.button_signup);
@@ -77,10 +81,11 @@ public class SignUpActivity extends AppCompatActivity {
             progressDialog.show();
 
             String e = email.getText().toString().trim();
+            String tel = phone.getText().toString().trim();
             String p1 = password1.getText().toString().trim();
             String p2 = password2.getText().toString().trim();
             try {
-                Utils.inputValidate(e,p1,p2);
+                Utils.inputValidate(e,tel,p1,p2);
                 auth.createUserWithEmailAndPassword(e,p1).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -96,15 +101,30 @@ public class SignUpActivity extends AppCompatActivity {
                     }}).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        progressDialog.hide();
-                        Utils.showMessage(contentView,"Successfully signed up, going to login page...",Utils.MESSAGE);
-                        //timeout
-                        new android.os.Handler(Looper.getMainLooper()).postDelayed(
-                                new Runnable() {
-                                    public void run() {
-                                        finish();
-                                    }
-                                }, 3000);
+                        String userId = auth.getCurrentUser().getUid();
+                        User user = new User(e,tel);
+                        users.child(userId).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                progressDialog.hide();
+                                Utils.showMessage(contentView,"Successfully signed up, going to login page...",Utils.MESSAGE);
+                                //timeout
+                                new android.os.Handler(Looper.getMainLooper()).postDelayed(
+                                        new Runnable() {
+                                            public void run() {
+                                                finish();
+                                            }
+                                        }, 3000);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.hide();
+                                auth.getCurrentUser().delete();
+                                Utils.showMessage(contentView,"Unknown error, try again later",Utils.MESSAGE);
+                            }
+                        });
+
                     }
                 });
             }catch (Exception err){
