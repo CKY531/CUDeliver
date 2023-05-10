@@ -4,9 +4,19 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.UUID;
+
+import edu.cuhk.cudeliver.databinding.FragmentOrderCreateBinding;
+import model.Order;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +24,15 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class OrderCreateFragment extends Fragment {
+
+    //Fragment view binding
+    private FragmentOrderCreateBinding createBinding;
+
+    //Connect to firebase database
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference usersRef;
+    private DatabaseReference orderRef;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,6 +68,12 @@ public class OrderCreateFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Connect to database
+        database = FirebaseDatabase.getInstance("https://cudeliver-523c3-default-rtdb.asia-southeast1.firebasedatabase.app");
+        usersRef = database.getReference("Users");
+        orderRef = database.getReference("Orders");
+        mAuth = FirebaseAuth.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -59,6 +84,44 @@ public class OrderCreateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_create, container, false);
+//        return inflater.inflate(R.layout.fragment_order_create, container, false);
+        createBinding = FragmentOrderCreateBinding.inflate(inflater, container, false);
+        //Add onClickListener to submit new order button
+        createBinding.submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("TAG", "Clicked the submit button!!!");
+
+                String orderId = UUID.randomUUID().toString();
+                double startLat = 22.41537;
+                double startLong = 114.20898;
+                double destinationLat = 22.419974;
+                double destinationLong = 114.207259;
+                String startName = "Chung Chi College";
+                String destinationName = "Sir Run Run Shaw Hall";
+                String startTime = createBinding.startTime.getText().toString();
+                String arrTime = createBinding.arrivalTime.getText().toString();
+                double price = Double.parseDouble(createBinding.price.getText().toString());
+                String contact = createBinding.contact.getText().toString();
+                String orderCreator = mAuth.getCurrentUser().getUid();
+                String orderDeliver = "";
+                String status = "Pending";
+                Order newOrder = new Order(startLat, startLong, destinationLat, destinationLong, startName, destinationName, startTime, arrTime, price, contact, orderCreator, orderDeliver, status);
+                orderRef.child(orderId).setValue(newOrder);
+
+                Log.i("TAG", "Successfully submit!!!");
+
+                createBinding.startTime.setText("");
+                createBinding.arrivalTime.setText("");
+                createBinding.price.setText("");
+                createBinding.contact.setText("");
+
+            }
+        });
+        return createBinding.getRoot();
+    }
+
+    public void submitOrder() {
+        Log.i("TAG", "Clicked");
     }
 }

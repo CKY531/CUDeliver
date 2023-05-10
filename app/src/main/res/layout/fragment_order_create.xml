@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OrderCreateFragment">
+    tools:context=".OrderCreateFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Order Create Fragment" />
+        android:layout_above="@+id/order_detail"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        tools:context=".OrderCreateFragment"
+        tools:layout="@layout/map_holder" />
+    
+    <LinearLayout
+        android:id="@+id/order_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
+        tools:context=".OrderCreateFragment"
+        >
+        <EditText
+            android:id="@+id/start_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Starting Time"
+            android:inputType="text"
+            tools:context=".OrderCreateFragment"
+            />
 
-</FrameLayout>
+        <EditText
+            android:id="@+id/arrival_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Arrival Time"
+            android:inputType="text"
+            tools:context=".OrderCreateFragment"
+            />
+
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price Offer"
+            android:inputType="text"
+            tools:context=".OrderCreateFragment"
+            />
+
+        <EditText
+            android:id="@+id/contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Your contact e.g. Tel"
+            android:inputType="text"
+            tools:context=".OrderCreateFragment"
+            />
+
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -15,6 +15,12 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.UUID;
+
 import edu.cuhk.cudeliver.databinding.ActivityOrderBinding;
 
 public class OrderActivity extends AppCompatActivity {
@@ -30,7 +36,7 @@ public class OrderActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         replaceFrag(new OrderDisplayFragment());
 
-//        //Add Listener to listen to bottom nav bar
+        //Add Listener to listen to bottom nav bar
         orderBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
