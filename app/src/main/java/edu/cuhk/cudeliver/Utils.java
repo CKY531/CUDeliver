@@ -31,7 +31,7 @@ public class Utils {
         if (password1.length() < 8) {
             throw new Exception("Password too short");
         }
-        if (!password1.equals(password2))
+        if (passwordConfirm(password1,password2))
         {
             throw new Exception( "Password does not match");
         }
@@ -45,6 +45,10 @@ public class Utils {
         if (password1.length() == 0) {
             throw new Exception("Please enter password");
         }
+    }
+
+    public static boolean passwordConfirm(String password1,String password2) {
+        return (password1.equals(password2));
     }
 
     public static void showMessage(View contentView,String message,int type ) {
