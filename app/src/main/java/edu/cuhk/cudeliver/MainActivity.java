@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     View contentView;
 
     ProgressDialog progressDialog;
+    ProgressDialog forgetProgressDialog;
 
     FirebaseAuth auth;
     FirebaseDatabase db;
@@ -52,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setCancelable(true);
         progressDialog.setMessage("Logging in...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        forgetProgressDialog = new ProgressDialog(this);
+        forgetProgressDialog.setCancelable(true);
+        forgetProgressDialog.setMessage("Please wait...");
+        forgetProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         // init view
         email = findViewById(R.id.email);
@@ -125,15 +131,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //hide keyboard
                 Utils.hideKeyboard(view,MainActivity.this);
-                progressDialog.show();
                 if (email.getText().toString().trim().length() == 0){
-                    Utils.showMessage(contentView,"Please input email",Utils.MESSAGE);
+                    Utils.showMessage(view,"Please input email",Utils.WARNING);
                     return;
                 }
+                forgetProgressDialog.show();
                 auth.sendPasswordResetEmail(email.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        progressDialog.hide();
+                        forgetProgressDialog.hide();
                         Utils.showMessage(contentView,"Reset link sent, please check your email",Utils.MESSAGE);
                         Log.d("EMAIL","SENT");
                         dialog.dismiss();
@@ -141,16 +147,16 @@ public class MainActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        progressDialog.hide();
+                        forgetProgressDialog.hide();
                         if(e.getMessage().equals("There is no user record corresponding to this identifier. The user may have been deleted."))
                         {
-                            Utils.showMessage(contentView,"This email has not registered",Utils.WARNING);
+                            Utils.showMessage(view,"This email has not registered",Utils.WARNING);
                         }else if(e.getMessage().equals("The email address is badly formatted."))
                         {
-                            Utils.showMessage(contentView,"Email invalid",Utils.WARNING);
+                            Utils.showMessage(view,"Email invalid",Utils.WARNING);
                         }
                         else{
-                            Utils.showMessage(contentView,"Unknown error, try again later",Utils.WARNING);
+                            Utils.showMessage(view,"Unknown error, try again later",Utils.WARNING);
                             Log.d("EMAIL",e.getMessage());
                         }
                     }
@@ -164,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onDestroy();
         progressDialog.dismiss();
+        forgetProgressDialog.dismiss();
     }
 
     @Override

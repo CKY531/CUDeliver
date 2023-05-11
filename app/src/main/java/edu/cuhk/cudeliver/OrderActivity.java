@@ -139,11 +139,11 @@ public class OrderActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.hide();
                         if (e.getMessage().equals("The password is invalid or the user does not have a password.")) {
-                            Utils.showMessage(contentView,"Password incorrect",Utils.WARNING);
+                            Utils.showMessage(view,"Password incorrect",Utils.WARNING);
                         }else
                         {
                             Log.d("AUTH",e.getMessage());
-                            Utils.showMessage(contentView,"Unknown error.",Utils.WARNING);
+                            Utils.showMessage(view,"Unknown error.",Utils.WARNING);
                         }
                     }
                 }).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -151,10 +151,10 @@ public class OrderActivity extends AppCompatActivity {
                     public void onSuccess(Void unused) {
                         progressDialog.hide();
                         if (np1.length() < 8){
-                            Utils.showMessage((View) contentView,"Password too short",Utils.WARNING);
+                            Utils.showMessage((View) view,"Password too short",Utils.WARNING);
                         }
                         else if (!Utils.passwordConfirm(np1,np2)){
-                            Utils.showMessage((View) contentView,"Password not match",Utils.WARNING);
+                            Utils.showMessage((View) view,"Password not match",Utils.WARNING);
                         }
                         else {
                             auth.getCurrentUser().updatePassword(np1).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -169,11 +169,11 @@ public class OrderActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     progressDialog.hide();
                                     if (e.getMessage().equals("The password is invalid or the user does not have a password.")) {
-                                        Utils.showMessage(contentView,"Old Password incorrect",Utils.WARNING);
+                                        Utils.showMessage(view,"Old Password incorrect",Utils.WARNING);
                                     }else
                                     {
                                         Log.d("AUTH",e.getMessage());
-                                        Utils.showMessage(contentView,"Unknown error.",Utils.WARNING);
+                                        Utils.showMessage(view,"Unknown error.",Utils.WARNING);
                                     }
                                 }
                             });
