@@ -1,7 +1,10 @@
 package edu.cuhk.cudeliver;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,7 +34,7 @@ public class Utils {
         if (password1.length() < 8) {
             throw new Exception("Password too short");
         }
-        if (passwordConfirm(password1,password2))
+        if (!passwordConfirm(password1,password2))
         {
             throw new Exception( "Password does not match");
         }
@@ -71,4 +74,11 @@ public class Utils {
         }
         s.show();
     }
+
+    public static void hideKeyboard(View view, Context context){
+        //hide keyboard
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }
+
