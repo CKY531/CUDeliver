@@ -73,7 +73,7 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         String status = (mOrderInfoList.get(position)).getStatus();
-        String time = (mOrderInfoList.get(position)).getArrTime();
+        String time = (mOrderInfoList.get(position)).getExpiryDate();
         double price = (mOrderInfoList.get(position)).getPrice();
 //        Uri uri = Uri.parse(mImagePath);
 //        System.out.println("path:" + mImagePath);

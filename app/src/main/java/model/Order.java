@@ -1,6 +1,7 @@
 package model;
 
 public class Order {
+    private String title;
 
     //Starting point latitude
     private double startLat;
@@ -21,10 +22,10 @@ public class Order {
     private String destinationName;
 
     //Starting time
-    private String startTime;
+    private String expiryTime;
 
     //Arrival Time
-    private String arrTime;
+    private String expiryDate;
 
     //Price offer
     private double price;
@@ -40,6 +41,14 @@ public class Order {
 
     //Status of order: finish, delivering, expired, or pending
     private String status;
+
+    public void setTitle(String title){
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 
     public double getStartLat() {
         return startLat;
@@ -89,20 +98,20 @@ public class Order {
         this.destinationName = destinationName;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getExpiryTime() {
+        return expiryTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setExpiryTime(String expiryTime) {
+        this.expiryTime = expiryTime;
     }
 
-    public String getArrTime() {
-        return arrTime;
+    public String getExpiryDate() {
+        return expiryDate;
     }
 
-    public void setArrTime(String arrTime) {
-        this.arrTime = arrTime;
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
     public double getPrice() {
@@ -149,15 +158,16 @@ public class Order {
 
     }
 
-    public Order(double startLat, double startLong, double destinationLat, double destinationLong, String startName, String destinationName, String startTime, String arrTime, double price, String contact, String orderCreator, String orderDeliver, String status) {
+    public Order(String title,double startLat, double startLong, double destinationLat, double destinationLong, String startName, String destinationName, String expiryTime, String expiryDate, double price, String contact, String orderCreator, String orderDeliver, String status) {
+        this.title = title;
         this.startLat = startLat;
         this.startLong = startLong;
         this.destinationLat = destinationLat;
         this.destinationLong = destinationLong;
         this.startName = startName;
         this.destinationName = destinationName;
-        this.startTime = startTime;
-        this.arrTime = arrTime;
+        this.expiryTime = expiryTime;
+        this.expiryDate = expiryDate;
         this.price = price;
         this.contact = contact;
         this.orderCreator = orderCreator;

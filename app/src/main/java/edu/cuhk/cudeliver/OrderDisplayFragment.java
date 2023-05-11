@@ -2,10 +2,8 @@ package edu.cuhk.cudeliver;
 
 import android.os.Bundle;
 
-import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -17,8 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.LinkedList;
 
 import model.Order;
-import model.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -122,7 +117,7 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
                 mOrderInfoList.clear();
                 for(DataSnapshot postSnapshot: snapshot.getChildren()){
                     mOrderInfoList.add(postSnapshot.getValue(Order.class));
-                    Log.d("DB",mOrderInfoList.getFirst().getArrTime());
+                    Log.d("DB","LOAD");
                 }
                 mAdapter.notifyDataSetChanged();
 

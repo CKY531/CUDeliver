@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         tools:context=".OrderCreateFragment"
-        tools:layout="@layout/map_holder" />
+        tools:layout="@layout/map_holder"/>
     
     <LinearLayout
         android:id="@+id/order_detail"
@@ -26,41 +26,128 @@
         android:orientation="vertical"
         tools:context=".OrderCreateFragment"
         >
-        <EditText
-            android:id="@+id/start_time"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Starting Time"
-            android:inputType="text"
-            tools:context=".OrderCreateFragment"
-            />
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp"
+            >
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Title:"
+                android:textSize="15dp"/>
 
-        <EditText
-            android:id="@+id/arrival_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Arrival Time"
-            android:inputType="text"
-            tools:context=".OrderCreateFragment"
-            />
+            <EditText
+                android:id="@+id/text_create_title"
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:hint="Title"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                tools:context=".OrderCreateFragment" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/price"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Price Offer"
-            android:inputType="text"
-            tools:context=".OrderCreateFragment"
-            />
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp"
+            >
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Expiry Date:"
+                android:textSize="15dp"/>
 
-        <EditText
-            android:id="@+id/contact"
+            <EditText
+                android:id="@+id/text_expiry_date"
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:hint="Set Date"
+                android:textSize="15dp"
+                android:inputType="date"
+                android:layout_marginLeft="10dp"
+                tools:context=".OrderCreateFragment" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Your contact e.g. Tel"
-            android:inputType="text"
-            tools:context=".OrderCreateFragment"
-            />
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Expiry Time:"
+                android:textSize="15dp" />
+
+
+            <EditText
+                android:id="@+id/text_expiry_time"
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:hint="Set Time"
+                android:focusable="false"
+                android:inputType="time"
+                android:textSize="15dp"
+                tools:context=".OrderCreateFragment" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Offer Price:"
+                android:textSize="15dp" />
+
+
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:hint="Price"
+                android:textSize="15dp"
+                android:text="0"
+                android:inputType="numberDecimal"
+                android:layout_marginLeft="10dp"
+                tools:context=".OrderCreateFragment" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Contact:"
+                android:textSize="15dp" />
+
+
+            <EditText
+                android:id="@+id/contact"
+                android:layout_width="295dp"
+                android:layout_height="wrap_content"
+                android:hint="Phone number"
+                android:textSize="15dp"
+                android:inputType="number"
+                android:layout_marginLeft="10dp"
+                tools:context=".OrderCreateFragment" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/submit_button"
