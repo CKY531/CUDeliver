@@ -1,6 +1,7 @@
 package edu.cuhk.cudeliver;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     EditText password;
     Button loginBtn;
     TextView signup;
+    TextView forget;
     View contentView;
 
     ProgressDialog progressDialog;
@@ -54,12 +57,12 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         signup = findViewById(R.id.text_signup);
+        forget = findViewById(R.id.text_forget_password);
         loginBtn = findViewById(R.id.button_login);
 
         loginBtn.setOnClickListener(view -> {
             //hide keyboard
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            Utils.hideKeyboard(view,MainActivity.this);
             String e = email.getText().toString().trim();
             String p = password.getText().toString().trim();
             try {
@@ -101,6 +104,60 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, SignUpActivity.class));
 //                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
         });
+
+        forget.setOnClickListener(view -> {
+            showForgetPasswordDialog();
+        });
+    }
+
+    private void showForgetPasswordDialog(){
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View forgetPasswordLayout = inflater.inflate(R.layout.dialog_forget_password,null);
+        dialog.setView(forgetPasswordLayout);
+
+        EditText email = forgetPasswordLayout.findViewById(R.id.text_forget_password_email);
+        Button submit = forgetPasswordLayout.findViewById(R.id.button_forget_submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //hide keyboard
+                Utils.hideKeyboard(view,MainActivity.this);
+                progressDialog.show();
+                if (email.getText().toString().trim().length() == 0){
+                    Utils.showMessage(contentView,"Please input email",Utils.MESSAGE);
+                    return;
+                }
+                auth.sendPasswordResetEmail(email.getText().toString().trim()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        progressDialog.hide();
+                        Utils.showMessage(contentView,"Reset link sent, please check your email",Utils.MESSAGE);
+                        Log.d("EMAIL","SENT");
+                        dialog.dismiss();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.hide();
+                        if(e.getMessage().equals("There is no user record corresponding to this identifier. The user may have been deleted."))
+                        {
+                            Utils.showMessage(contentView,"This email has not registered",Utils.WARNING);
+                        }else if(e.getMessage().equals("The email address is badly formatted."))
+                        {
+                            Utils.showMessage(contentView,"Email invalid",Utils.WARNING);
+                        }
+                        else{
+                            Utils.showMessage(contentView,"Unknown error, try again later",Utils.WARNING);
+                            Log.d("EMAIL",e.getMessage());
+                        }
+                    }
+                });
+            }
+        });
+        dialog.show();
     }
     @Override
     public void onDestroy()
