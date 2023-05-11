@@ -47,6 +47,7 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
 
     static LinkedList<Order> mOrderInfoList = new LinkedList<>();
 
+
     private FirebaseDatabase db;
     DatabaseReference users;
     DatabaseReference orders;

@@ -107,6 +107,7 @@ public class OrderCreateFragment extends Fragment {
                 String orderDeliver = "";
                 String status = "Pending";
                 Order newOrder = new Order(startLat, startLong, destinationLat, destinationLong, startName, destinationName, startTime, arrTime, price, contact, orderCreator, orderDeliver, status);
+                usersRef.child(orderCreator).child("myOrders").child(orderId).setValue(newOrder);
                 orderRef.child(orderId).setValue(newOrder);
 
                 Log.i("TAG", "Successfully submit!!!");
