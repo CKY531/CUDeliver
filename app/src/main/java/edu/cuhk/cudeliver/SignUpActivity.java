@@ -75,8 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
         // signup onClick
         signupBtn.setOnClickListener(view -> {
             //hide keyboard
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            Utils.hideKeyboard(view,SignUpActivity.this);
 
             progressDialog.show();
 

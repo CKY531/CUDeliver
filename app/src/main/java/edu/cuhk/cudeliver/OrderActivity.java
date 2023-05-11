@@ -126,8 +126,7 @@ public class OrderActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                Utils.hideKeyboard(view,OrderActivity.this);
                 progressDialog.show();
                 String op =  oldPassword.getText().toString().trim();
                 String np1 = newPassword1.getText().toString().trim();

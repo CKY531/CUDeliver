@@ -107,9 +107,10 @@ public class OrderDisplayFragment extends Fragment implements SwipeRefreshLayout
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mOrderInfoList.size() - 1)
-                {
-                    Utils.showMessage((View) getActivity().findViewById(android.R.id.content),"Reached bottom",Utils.NEUTRAL);
+                if (mOrderInfoList.size() > 4){
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mOrderInfoList.size() - 1) {
+                        Utils.showMessage((View) getActivity().findViewById(android.R.id.content), "Reached bottom", Utils.NEUTRAL);
+                    }
                 }
             }
         });

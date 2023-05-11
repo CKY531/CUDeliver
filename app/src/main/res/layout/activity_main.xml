@@ -78,6 +78,14 @@
         android:text="Sign up here!"
         android:textSize="14sp"
         android:id="@+id/text_signup"
+        android:layout_marginBottom="0dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Forget password?"
+        android:textSize="14sp"
+        android:id="@+id/text_forget_password"
         android:layout_marginBottom="20dp"/>
 
 </LinearLayout>
