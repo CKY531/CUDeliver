@@ -3,10 +3,27 @@ package edu.cuhk.cudeliver;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import model.Order;
 
 public class Utils {
 
@@ -79,6 +96,37 @@ public class Utils {
         //hide keyboard
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void updateStatus(DatabaseReference usersRef, DatabaseReference orderRef, FirebaseAuth auth){
+        orderRef.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    String id = postSnapshot.getKey();
+                    Order order = postSnapshot.getValue(Order.class);
+                    if (order.getStatus().equals("Expired")) break;
+
+                    Calendar calendar = Calendar.getInstance();
+                    Date currentDate = calendar.getTime();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh : mm");
+                    try {
+                        Date date = sdf.parse(order.getExpiryDate() + " " + order.getExpiryTime());
+                        if (date.compareTo(currentDate) <= 0) {
+                            Log.d("TIME", "Expired: " + order.getTitle());
+                            order.setStatus("Expired");
+                            orderRef.child(id).removeValue();
+                            usersRef.child(auth.getCurrentUser().getUid()).child("myOrders").child(id).child("status").setValue("Expired");
+                        }
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    Log.d("DB", "LOAD");
+                }
+            }
+        });
     }
 }
 

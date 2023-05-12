@@ -7,12 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.bumptech.glide.util.Util;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,12 +41,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import edu.cuhk.cudeliver.databinding.ActivityOrderBinding;
+import model.Order;
 import model.User;
 
-public class OrderActivity extends AppCompatActivity {
+public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLayout.OnRefreshListener  {
 
     ActivityOrderBinding orderBinding;
     FirebaseAuth auth;
@@ -58,6 +67,8 @@ public class OrderActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     View contentView;
 
     @Override
@@ -67,11 +78,19 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(orderBinding.getRoot());
         contentView = findViewById(android.R.id.content);
         auth = FirebaseAuth.getInstance();
-        replaceFrag(new OrderDisplayFragment());
+        replaceFrag(new OrderDisplayFragment(),"orderList");
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(true);
         progressDialog.setMessage("Updating...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        // setup swipe refresh
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_order_activity);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
 
         database = FirebaseDatabase.getInstance("https://cudeliver-523c3-default-rtdb.asia-southeast1.firebasedatabase.app");
         usersRef = database.getReference("Users");
@@ -94,16 +113,16 @@ public class OrderActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.create:
-                    replaceFrag(new OrderCreateFragment());
+                    replaceFrag(new OrderCreateFragment(),"create");
                     break;
                 case R.id.orderList:
-                    replaceFrag(new OrderDisplayFragment());
+                    replaceFrag(new OrderDisplayFragment(),"orderList");
                     break;
                 case R.id.yourOrder:
-                    replaceFrag(new YourOrderFragment());
+                    replaceFrag(new YourOrderFragment(),"yourOrder");
                     break;
                 case R.id.orderToDeliver:
-                    replaceFrag(new OrderToDeliverFragment());
+                    replaceFrag(new OrderToDeliverFragment(),"orderToDeliver");
                     break;
             }
 
@@ -215,11 +234,46 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     //Replace old order fragment with the new one according to the selected item in bottom nav
-    public void replaceFrag(Fragment frag) {
+    public void replaceFrag(Fragment frag, String tag) {
         FragmentManager fMan = getSupportFragmentManager();
         FragmentTransaction fTran = fMan.beginTransaction();
-        fTran.replace(R.id.orderFragLayout, frag);
+        fTran.replace(R.id.orderFragLayout, frag,tag);
         fTran.commit();
     }
 
+    public Fragment getVisibleFragment(){
+        FragmentManager fragmentManager = OrderActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            for(Fragment fragment : fragments){
+                if(fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(false);
+        Utils.updateStatus(usersRef,orderRef,auth);
+
+            String tag = getVisibleFragment().getTag();
+         if (tag.equals("create")){
+             replaceFrag(new OrderCreateFragment(),"create");
+             return;
+         }
+        if (tag.equals("orderList")){
+            replaceFrag(new OrderDisplayFragment(),"orderList");
+            return;
+        }
+        if (tag.equals("yourOrder")){
+            replaceFrag(new YourOrderFragment(),"yourOrder");
+            return;
+        }
+        if (tag.equals("orderToDeliver")){
+            replaceFrag(new OrderToDeliverFragment(),"orderToDeliver");
+            return;
+        }
+    }
 }
