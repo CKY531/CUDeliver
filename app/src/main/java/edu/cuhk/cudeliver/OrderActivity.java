@@ -4,15 +4,20 @@ import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -71,6 +76,8 @@ public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLay
 
     View contentView;
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +114,26 @@ public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLay
 
             }
         });
+        //Ask for location permission
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // 2. Otherwise, request location permissions from the user.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                    }, 101);
+        }
+
+        //Ask for location permission
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // 2. Otherwise, request location permissions from the user.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                    }, 101);
+        }
+
 
         //Add Listener to listen to bottom nav bar
         orderBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -136,6 +163,11 @@ public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLay
         return true;
     }
 
+    @SuppressLint("MissingPermission")
+    private void enableMyLocation() {
+        //Check if permissions are granted
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

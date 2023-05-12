@@ -41,6 +41,54 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
+                    android:text="Start Location:"
+                    android:textSize="15dp"
+                    />
+
+                <EditText
+                    android:id="@+id/text_create_start_location"
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:hint="Please Click on Map to choose"
+                    android:inputType="none"
+                    android:textSize="15sp"
+                    tools:context=".OrderCreateFragment" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Destination:"
+                    android:textSize="15dp"
+                    />
+
+                <EditText
+                    android:id="@+id/text_create_destination"
+                    android:layout_width="295dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:hint="Please Click on Map to choose"
+                    android:inputType="none"
+                    android:textSize="15sp"
+                    tools:context=".OrderCreateFragment" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
                     android:text="Title:"
                     android:textSize="15dp"
                     />
