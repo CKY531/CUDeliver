@@ -3,6 +3,8 @@ package model;
 import java.util.List;
 
 public class Order {
+    private String id;
+
     private String title;
 
     private String description;
@@ -180,11 +182,15 @@ public class Order {
         this.status = status;
     }
 
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id;  }
+
     public Order(){
 
     }
 
-    public Order(String title, String description, double startLat, double startLong, double destinationLat, double destinationLong, String startName, String destinationName, String expiryTime, String expiryDate, double price, String contact, String orderCreator, String orderDeliver, String status, List<Double> routeLat, List<Double> routeLong) {
+    public Order(String title, String description, double startLat, double startLong, double destinationLat, double destinationLong, String startName, String destinationName, String expiryTime, String expiryDate, double price, String contact, String orderCreator, String orderDeliver, String status, List<Double> routeLat, List<Double> routeLong, String id) {
         this.title = title;
         this.description = description;
         this.startLat = startLat;
@@ -202,5 +208,6 @@ public class Order {
         this.status = status;
         this.routeLat = routeLat;
         this.routeLong = routeLong;
+        this.id = id;
     }
 }

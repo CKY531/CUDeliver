@@ -11,4 +11,5 @@
     <string name="string_change_password">Change Password</string>
     <string name="string_logout">Logout</string>
     <string name="google_maps_key">AIzaSyCgJGtnvkJaBS-79Xwwl7mkRa0ZqVD08gs</string>
+    <string name="order_detail">Order Detail!!</string>
 </resources>

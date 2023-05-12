@@ -1,5 +1,6 @@
 package edu.cuhk.cudeliver;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,10 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import androidx.annotation.NonNull;
+//import android.support.v4.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
@@ -60,9 +65,15 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
 //                     Get the position of the item that was clicked.
                     int position = getLayoutPosition();
                     Toast.makeText(v.getContext(), "Position " + position + " is clicked", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(v.getContext().getApplicationContext(), DetailActivity.class);
-//                    intent.putExtra("position",position);
-//                    ((Activity) v.getContext()).startActivityForResult(intent,1);
+                    Fragment fragment = OrderDetailFragment.newInstance(mOrderInfoList.get(position));
+
+                    AppCompatActivity act = (AppCompatActivity) v.getContext();
+                    FragmentTransaction transaction = act.getSupportFragmentManager().beginTransaction();
+
+                    transaction.replace(R.id.orderFragLayout, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
                 }
 
             });

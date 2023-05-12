@@ -137,8 +137,6 @@ public class OrderCreateFragment extends Fragment {
     public static OrderCreateFragment newInstance(String param1, String param2) {
         OrderCreateFragment fragment = new OrderCreateFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -176,6 +174,9 @@ public class OrderCreateFragment extends Fragment {
         int currentYear = calendar.get(Calendar.YEAR);
         int currentMonth= calendar.get(Calendar.MONTH)+1;
         int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        createBinding.textCreateStartLocation.setText("");
+        createBinding.textCreateDestination.setText("");
 
         //Disable the start location and destination EditText
         createBinding.textCreateStartLocation.setFocusable(false);
@@ -321,6 +322,17 @@ public class OrderCreateFragment extends Fragment {
                 String status = "Pending";
 
                 // input validation
+                Log.i("TAG","OKKKKK");
+//                Log.i("TAG", "start:"+startName);
+//                if (TextUtils.isEmpty(startName)) {
+//                    Log.i("TAG", "Enter Empty start!!!");
+//                    Utils.showMessage(view,"Please choose starting location in the map",Utils.WARNING);
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(createBinding.textCreateDestination.getText().toString())) {
+//                    Utils.showMessage(view,"Please choose Destination in the map",Utils.WARNING);
+//                    return;
+//                }
                 if(title.length() == 0) {
                     Utils.showMessage(view,"Please input title",Utils.WARNING);
                     return;
@@ -339,7 +351,7 @@ public class OrderCreateFragment extends Fragment {
                     return;
                 }
                 progressDialog.show();
-                Order newOrder = new Order(title, description, startLat, startLong, destinationLat, destinationLong, startName, destinationName, expiryTime, expiryDate, price, contact, orderCreator, orderDeliver, status, latArr, lngArr);
+                Order newOrder = new Order(title, description, startLat, startLong, destinationLat, destinationLong, startName, destinationName, expiryTime, expiryDate, price, contact, orderCreator, orderDeliver, status, latArr, lngArr, orderId);
                 usersRef.child(orderCreator).child("myOrders").child(orderId).setValue(newOrder).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
