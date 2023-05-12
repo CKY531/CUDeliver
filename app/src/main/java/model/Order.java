@@ -3,6 +3,8 @@ package model;
 public class Order {
     private String title;
 
+    private String description;
+
     //Starting point latitude
     private double startLat;
 
@@ -48,6 +50,14 @@ public class Order {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getStartLat() {
@@ -158,8 +168,9 @@ public class Order {
 
     }
 
-    public Order(String title,double startLat, double startLong, double destinationLat, double destinationLong, String startName, String destinationName, String expiryTime, String expiryDate, double price, String contact, String orderCreator, String orderDeliver, String status) {
+    public Order(String title,String description,double startLat, double startLong, double destinationLat, double destinationLong, String startName, String destinationName, String expiryTime, String expiryDate, double price, String contact, String orderCreator, String orderDeliver, String status) {
         this.title = title;
+        this.description = description;
         this.startLat = startLat;
         this.startLong = startLong;
         this.destinationLat = destinationLat;

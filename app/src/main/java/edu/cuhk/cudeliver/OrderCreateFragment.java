@@ -20,9 +20,13 @@ import android.widget.TimePicker;
 import com.bumptech.glide.util.Util;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +36,7 @@ import java.util.UUID;
 
 import edu.cuhk.cudeliver.databinding.FragmentOrderCreateBinding;
 import model.Order;
+import model.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,10 +59,6 @@ public class OrderCreateFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public OrderCreateFragment() {
         // Required empty public constructor
@@ -90,10 +91,7 @@ public class OrderCreateFragment extends Fragment {
         usersRef = database.getReference("Users");
         orderRef = database.getReference("Orders");
         mAuth = FirebaseAuth.getInstance();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setCancelable(true);
         progressDialog.setMessage("Creating Order...");
@@ -115,6 +113,7 @@ public class OrderCreateFragment extends Fragment {
 
         createBinding.textExpiryTime.setText(String.format("%02d : %02d", currentHour, currentMinute));
         createBinding.textExpiryDate.setText(String.format("%04d/%02d/%02d", currentYear, currentMonth,currentDay));
+        createBinding.contact.setText(OrderActivity.currentUser.getPhone());
 
         createBinding.textExpiryDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +166,6 @@ public class OrderCreateFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Utils.hideKeyboard(view,getContext());
-                progressDialog.show();
 
                 Log.i("TAG", "Clicked the submit button!!!");
 
@@ -177,6 +175,7 @@ public class OrderCreateFragment extends Fragment {
                 double destinationLat = 22.419974;
                 double destinationLong = 114.207259;
                 String title = createBinding.textCreateTitle.getText().toString();
+                String description = createBinding.textDescription.getText().toString();
                 String startName = "Chung Chi College";
                 String destinationName = "Sir Run Run Shaw Hall";
                 String expiryTime = createBinding.textExpiryTime.getText().toString();
@@ -204,8 +203,8 @@ public class OrderCreateFragment extends Fragment {
                     Utils.showMessage(view,"Please enter valid HK phone number",Utils.WARNING);
                     return;
                 }
-
-                Order newOrder = new Order(title,startLat, startLong, destinationLat, destinationLong, startName, destinationName, expiryTime, expiryDate, price, contact, orderCreator, orderDeliver, status);
+                progressDialog.show();
+                Order newOrder = new Order(title,description,startLat, startLong, destinationLat, destinationLong, startName, destinationName, expiryTime, expiryDate, price, contact, orderCreator, orderDeliver, status);
                 usersRef.child(orderCreator).child("myOrders").child(orderId).setValue(newOrder).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -213,9 +212,9 @@ public class OrderCreateFragment extends Fragment {
                             @Override
                             public void onSuccess(Void unused) {
                                 Log.i("TAG", "Successfully submit!!!");
-                                createBinding.price.setText("");
-                                createBinding.contact.setText("");
-                                createBinding.textCreateTitle.setText("");
+                                createBinding.textExpiryTime.setText(String.format("%02d : %02d", currentHour, currentMinute));
+                                createBinding.textExpiryDate.setText(String.format("%04d/%02d/%02d", currentYear, currentMonth,currentDay));
+                                createBinding.contact.setText(OrderActivity.currentUser.getPhone());
 
                                 progressDialog.hide();
                                 Utils.showMessage(view,"Order submitted",Utils.MESSAGE);

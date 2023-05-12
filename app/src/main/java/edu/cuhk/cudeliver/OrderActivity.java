@@ -32,17 +32,29 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.UUID;
 
 import edu.cuhk.cudeliver.databinding.ActivityOrderBinding;
+import model.User;
 
 public class OrderActivity extends AppCompatActivity {
 
     ActivityOrderBinding orderBinding;
     FirebaseAuth auth;
+
+    private FirebaseDatabase database;
+    private DatabaseReference usersRef;
+    private DatabaseReference orderRef;
+
+    static User currentUser;
+
+
 
     ProgressDialog progressDialog;
 
@@ -60,6 +72,22 @@ public class OrderActivity extends AppCompatActivity {
         progressDialog.setCancelable(true);
         progressDialog.setMessage("Updating...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        database = FirebaseDatabase.getInstance("https://cudeliver-523c3-default-rtdb.asia-southeast1.firebasedatabase.app");
+        usersRef = database.getReference("Users");
+        orderRef = database.getReference("Orders");
+
+        usersRef.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentUser = snapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //Add Listener to listen to bottom nav bar
         orderBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
