@@ -299,14 +299,14 @@ public class OrderCreateFragment extends Fragment {
                 Log.i("TAG", "Clicked the submit button!!!");
 
                 String orderId = UUID.randomUUID().toString();
-                double startLat = 22.41537;
-                double startLong = 114.20898;
-                double destinationLat = 22.419974;
-                double destinationLong = 114.207259;
+                double startLat = points.get(0).latitude;
+                double startLong = points.get(0).longitude;
+                double destinationLat = points.get(1).latitude;
+                double destinationLong = points.get(1).longitude;
                 String title = createBinding.textCreateTitle.getText().toString();
                 String description = createBinding.textDescription.getText().toString();
-                String startName = "Chung Chi College";
-                String destinationName = "Sir Run Run Shaw Hall";
+                String startName = createBinding.textCreateStartLocation.getText().toString();
+                String destinationName = createBinding.textCreateDestination.getText().toString();
                 String expiryTime = createBinding.textExpiryTime.getText().toString();
                 String expiryDate = createBinding.textExpiryDate.getText().toString();
                 String contact = createBinding.contact.getText().toString();
@@ -333,7 +333,7 @@ public class OrderCreateFragment extends Fragment {
                     return;
                 }
                 progressDialog.show();
-                Order newOrder = new Order(title,description,startLat, startLong, destinationLat, destinationLong, startName, destinationName, expiryTime, expiryDate, price, contact, orderCreator, orderDeliver, status);
+                Order newOrder = new Order(title, description, startLat, startLong, destinationLat, destinationLong, startName, destinationName, expiryTime, expiryDate, price, contact, orderCreator, orderDeliver, status);
                 usersRef.child(orderCreator).child("myOrders").child(orderId).setValue(newOrder).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -507,30 +507,6 @@ public class OrderCreateFragment extends Fragment {
             mMap.addPolyline(polylineOptions);
         }
     }
-
-//    //Get Start location
-//    public class StartLocParser extends AsyncTask<String, Void, String> {
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            JSONObject jObj = null;
-//            String startLoc = "";
-//            try {
-//                jObj = new JSONObject(strings[0]);
-//                Parser parser = new Parser();
-//                startLoc = parser.getStartLoc(jObj);
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            return startLoc;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            Log.i("TAG", "Arrive Starting Loc:" + s);
-//            createBinding.textCreateStartLocation.setText(s);
-//        }
-//    }
 
     //Get Destination
     public class DestinationParser extends AsyncTask<String, Void, String> {
