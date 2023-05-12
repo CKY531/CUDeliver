@@ -107,7 +107,7 @@ public class YourOrderFragment extends Fragment implements SwipeRefreshLayout.On
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (mOrderInfoList.size() > 4){
+                if (mOrderInfoList.size() > 3){
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mOrderInfoList.size() - 1) {
                         Utils.showMessage((View) getActivity().findViewById(android.R.id.content), "Reached bottom", Utils.NEUTRAL);
                     }
