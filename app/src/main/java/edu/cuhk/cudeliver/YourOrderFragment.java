@@ -140,7 +140,6 @@ public class YourOrderFragment extends Fragment implements SwipeRefreshLayout.On
         new android.os.Handler(Looper.getMainLooper()).postDelayed(
                 new Runnable() {
                     public void run() {
-                        Toast.makeText(getContext(),"Finish",Toast.LENGTH_SHORT).show();
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 }, 3000);

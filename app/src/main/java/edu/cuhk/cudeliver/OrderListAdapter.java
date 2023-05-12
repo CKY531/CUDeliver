@@ -24,18 +24,28 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
     class OrderViewHolder extends RecyclerView.ViewHolder {
 
 //        ImageView flowerImageItemView;
-        TextView mOrderType;
-        TextView mOrder;
-        TextView mTime;
+        TextView mPrice;
+        TextView mTitle;
+        TextView mExpiry;
+
+        TextView mDest;
+
+        TextView mSrc;
+
+        TextView mStatus;
 
         final OrderListAdapter mAdapter;
 
         public OrderViewHolder(View itemView, OrderListAdapter adapter) {
             super(itemView);
 //            flowerImageItemView = itemView.findViewById(R.id.image);
-            mOrder = itemView.findViewById(R.id.text_price);
-            mOrderType = itemView.findViewById(R.id.text_status);
-            mTime = itemView.findViewById(R.id.text_finish_time);
+            mTitle = itemView.findViewById(R.id.list_item_title);
+            mPrice = itemView.findViewById(R.id.list_item_price);
+            mExpiry = itemView.findViewById(R.id.list_item_expiry);
+            mStatus = itemView.findViewById(R.id.list_item_status);
+            mDest = itemView.findViewById(R.id.list_item_dest);
+            mSrc = itemView.findViewById(R.id.list_item_src);
+
             this.mAdapter = adapter;
 //
 //            // Event handling registration, page navigation goes here
@@ -73,17 +83,26 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         String status = (mOrderInfoList.get(position)).getStatus();
-        String time = (mOrderInfoList.get(position)).getExpiryDate();
+        String expiry = (mOrderInfoList.get(position)).getExpiryTime();
         double price = (mOrderInfoList.get(position)).getPrice();
+        String title = (mOrderInfoList.get(position)).getTitle();
+        String src = (mOrderInfoList.get(position)).getStartName();
+        String dest = (mOrderInfoList.get(position)).getDestinationName();
+
 //        Uri uri = Uri.parse(mImagePath);
 //        System.out.println("path:" + mImagePath);
         // Update the following to display correct information based on the given position
 
 
         // Set up View items for this row (position), modify to show correct information read from the CSV
-        holder.mOrderType.setText(status);
-        holder.mOrder.setText("$"+String.valueOf(price));
-        holder.mTime.setText(time);
+        holder.mStatus.setText(status);
+        holder.mPrice.setText("$"+String.valueOf(price));
+        holder.mTitle.setText(title);
+        holder.mExpiry.setText(expiry);
+        holder.mSrc.setText(src);
+        holder.mDest.setText(dest);
+
+
 //        holder.flowerImageItemView.setImageURI(uri);
 
     }

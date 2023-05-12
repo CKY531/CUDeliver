@@ -215,6 +215,8 @@ public class OrderCreateFragment extends Fragment {
                                 createBinding.textExpiryTime.setText(String.format("%02d : %02d", currentHour, currentMinute));
                                 createBinding.textExpiryDate.setText(String.format("%04d/%02d/%02d", currentYear, currentMonth,currentDay));
                                 createBinding.contact.setText(OrderActivity.currentUser.getPhone());
+                                createBinding.textCreateTitle.setText("");
+                                createBinding.textDescription.setText("");
 
                                 progressDialog.hide();
                                 Utils.showMessage(view,"Order submitted",Utils.MESSAGE);
