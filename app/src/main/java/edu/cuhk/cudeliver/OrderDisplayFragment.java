@@ -74,6 +74,7 @@ public class OrderDisplayFragment extends Fragment {
         users = db.getReference("Users");
         orders = db.getReference("Orders");
         auth = FirebaseAuth.getInstance();
+        ((OrderActivity) getActivity()).enableSwipe();
     }
 
     @Override

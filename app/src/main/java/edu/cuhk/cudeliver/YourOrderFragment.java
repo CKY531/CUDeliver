@@ -73,6 +73,7 @@ public class YourOrderFragment extends Fragment{
         db = FirebaseDatabase.getInstance("https://cudeliver-523c3-default-rtdb.asia-southeast1.firebasedatabase.app/");
         users = db.getReference("Users");
         orders = users.child(auth.getCurrentUser().getUid()).child("myOrders");
+        ((OrderActivity) getActivity()).enableSwipe();
         // dummy data
 //        String[] a = {"Dummy0","Dummy1","Dummy2"};
 //        mOrderInfoList.add(a);

@@ -1,6 +1,7 @@
 package edu.cuhk.cudeliver;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +112,7 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
             Date date = sdf.parse(expiryDate+expiry);
             if (date.getTime() - currentDate.getTime() >= 82800000) holder.mExpiry.setText("> 1 day");
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            Log.e("date",e.getMessage());
         }
         holder.mSrc.setText(src);
         holder.mDest.setText(dest);

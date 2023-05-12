@@ -96,6 +96,8 @@ public class OrderCreateFragment extends Fragment {
         progressDialog.setCancelable(true);
         progressDialog.setMessage("Creating Order...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        ((OrderActivity) getActivity()).disableSwipe();
+
     }
 
     @Override
@@ -249,4 +251,5 @@ public class OrderCreateFragment extends Fragment {
         super.onDestroy();
         progressDialog.dismiss();
     }
+
 }

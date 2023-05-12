@@ -276,4 +276,11 @@ public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLay
             return;
         }
     }
+    public void disableSwipe(){
+        mSwipeRefreshLayout.setEnabled(false);
+    }
+
+    public void enableSwipe(){
+        mSwipeRefreshLayout.setEnabled(true);
+    }
 }
