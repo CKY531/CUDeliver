@@ -111,7 +111,7 @@ public class OrderDisplayFragment extends Fragment {
         orders.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Utils.updateStatus(users,orders,auth);
+                Utils.updateStatus(users,orders,auth);
                 mOrderInfoList.clear();
                 for(DataSnapshot postSnapshot: snapshot.getChildren()){
                     String id = postSnapshot.getKey();

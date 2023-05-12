@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 import androidx.annotation.NonNull;
@@ -84,6 +88,7 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         String status = (mOrderInfoList.get(position)).getStatus();
         String expiry = (mOrderInfoList.get(position)).getExpiryTime();
+        String expiryDate = (mOrderInfoList.get(position)).getExpiryDate();
         double price = (mOrderInfoList.get(position)).getPrice();
         String title = (mOrderInfoList.get(position)).getTitle();
         String src = (mOrderInfoList.get(position)).getStartName();
@@ -99,6 +104,15 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
         holder.mPrice.setText("$"+String.valueOf(price));
         holder.mTitle.setText(title);
         holder.mExpiry.setText(expiry);
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/ddhh : mm");
+        try {
+            Date date = sdf.parse(expiryDate+expiry);
+            if (date.getTime() - currentDate.getTime() >= 82800000) holder.mExpiry.setText("> 1 day");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
         holder.mSrc.setText(src);
         holder.mDest.setText(dest);
 
