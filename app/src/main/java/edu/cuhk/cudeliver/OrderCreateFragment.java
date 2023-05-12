@@ -102,6 +102,9 @@ public class OrderCreateFragment extends Fragment {
     private GoogleMap mMap;
     private ArrayList<LatLng> points;
 
+    //Route latlng
+    private ArrayList<LatLng> routePoints;
+
     //Require permission
     private ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -298,6 +301,9 @@ public class OrderCreateFragment extends Fragment {
 
                 Log.i("TAG", "Clicked the submit button!!!");
 
+                List<Double> latArr = arrListToLatArr(routePoints);
+                List<Double> lngArr = arrListToLngArr(routePoints);
+
                 String orderId = UUID.randomUUID().toString();
                 double startLat = points.get(0).latitude;
                 double startLong = points.get(0).longitude;
@@ -333,7 +339,7 @@ public class OrderCreateFragment extends Fragment {
                     return;
                 }
                 progressDialog.show();
-                Order newOrder = new Order(title, description, startLat, startLong, destinationLat, destinationLong, startName, destinationName, expiryTime, expiryDate, price, contact, orderCreator, orderDeliver, status);
+                Order newOrder = new Order(title, description, startLat, startLong, destinationLat, destinationLong, startName, destinationName, expiryTime, expiryDate, price, contact, orderCreator, orderDeliver, status, latArr, lngArr);
                 usersRef.child(orderCreator).child("myOrders").child(orderId).setValue(newOrder).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -371,6 +377,24 @@ public class OrderCreateFragment extends Fragment {
             }
         });
         return createBinding.getRoot();
+    }
+
+    //Given ArrayList<LatLng>, return Lat Double[]
+    public List<Double> arrListToLatArr(ArrayList<LatLng> temp) {
+        List<Double> latArr = new ArrayList<Double>();
+        for (int i = 0;i < temp.size();i++) {
+            latArr.add(temp.get(i).latitude);
+        }
+        return latArr;
+    }
+
+    //Given ArrayList<LatLng>, return Long Double[]
+    public List<Double> arrListToLngArr(ArrayList<LatLng> temp) {
+        List<Double> lngArr = new ArrayList<Double>();
+        for (int i = 0;i < temp.size();i++) {
+            lngArr.add(temp.get(i).longitude);
+        }
+        return lngArr;
     }
 
     //Get Address by latitude and longtitude
@@ -498,6 +522,7 @@ public class OrderCreateFragment extends Fragment {
             //Draw the route
             Log.i("TAG", "Arrive Draw !!!!!!");
             Log.i("TAG", "Length of LATLNG:"+latLngs.size());
+            routePoints = latLngs;
             PolylineOptions polylineOptions = new PolylineOptions();
 
             polylineOptions.addAll(latLngs);

@@ -1,9 +1,17 @@
 package model;
 
+import java.util.List;
+
 public class Order {
     private String title;
 
     private String description;
+
+    //Route latitude
+    private List<Double> routeLat;
+
+    //Route longitude
+    private List<Double> routeLong;
 
     //Starting point latitude
     private double startLat;
@@ -59,6 +67,14 @@ public class Order {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<Double> getRouteLat() { return routeLat; }
+
+    public void setRouteLat(List<Double> routeLat) { this.routeLat = routeLat; }
+
+    public List<Double> getRouteLong() { return routeLong; }
+
+    public void setRouteLong(List<Double> routeLong) { this.routeLong = routeLong; }
 
     public double getStartLat() {
         return startLat;
@@ -168,7 +184,7 @@ public class Order {
 
     }
 
-    public Order(String title,String description,double startLat, double startLong, double destinationLat, double destinationLong, String startName, String destinationName, String expiryTime, String expiryDate, double price, String contact, String orderCreator, String orderDeliver, String status) {
+    public Order(String title, String description, double startLat, double startLong, double destinationLat, double destinationLong, String startName, String destinationName, String expiryTime, String expiryDate, double price, String contact, String orderCreator, String orderDeliver, String status, List<Double> routeLat, List<Double> routeLong) {
         this.title = title;
         this.description = description;
         this.startLat = startLat;
@@ -184,5 +200,7 @@ public class Order {
         this.orderCreator = orderCreator;
         this.orderDeliver = orderDeliver;
         this.status = status;
+        this.routeLat = routeLat;
+        this.routeLong = routeLong;
     }
 }
