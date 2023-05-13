@@ -43,6 +43,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.cuhk.cudeliver.databinding.ActivityOrderBinding;
 import edu.cuhk.cudeliver.databinding.FragmentOrderDetailBinding;
 import model.Order;
 
@@ -55,6 +56,8 @@ public class OrderDetailFragment extends Fragment {
 
     //View binding
     private FragmentOrderDetailBinding fDetailBinding;
+    //Need to get navigation bar to select
+    private ActivityOrderBinding orderBinding;
 
     //Connect to firebase database
     private FirebaseAuth mAuth;
@@ -83,8 +86,9 @@ public class OrderDetailFragment extends Fragment {
                 }
             });
 
-    public OrderDetailFragment() {
+    public OrderDetailFragment(ActivityOrderBinding incomingBinding) {
         // Required empty public constructor
+        orderBinding = incomingBinding;
     }
 
     /**
@@ -94,8 +98,8 @@ public class OrderDetailFragment extends Fragment {
      * @return A new instance of fragment OrderDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OrderDetailFragment newInstance(Order thisOrder) {
-        OrderDetailFragment fragment = new OrderDetailFragment();
+    public static OrderDetailFragment newInstance(Order thisOrder, ActivityOrderBinding incomingBinding) {
+        OrderDetailFragment fragment = new OrderDetailFragment(incomingBinding);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         order = thisOrder;
@@ -123,6 +127,12 @@ public class OrderDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         fDetailBinding = FragmentOrderDetailBinding.inflate(inflater, container, false);
         Calendar calendar = Calendar.getInstance();
+
+        //Check if ActivityOrderBinding pass or not, if pass, it is in OrderDisplayFragment, display accept button
+        if (orderBinding == null) {
+            //Set accept button to invisible
+            fDetailBinding.acceptButton.setVisibility(View.GONE);
+        }
 
         //Disable all edittext
         fDetailBinding.textDetailStartLocation.setFocusable(false);
@@ -223,7 +233,10 @@ public class OrderDetailFragment extends Fragment {
                             public void onSuccess(Void unused) {
                                 Utils.showMessage(view,"Order accepted",Utils.MESSAGE);
                                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                                fm.popBackStack();
+                                FragmentTransaction fTran = fm.beginTransaction();
+                                fTran.replace(R.id.orderFragLayout, new OrderToDeliverFragment());
+                                fTran.commit();
+                                orderBinding.bottomNavigationView.setSelectedItemId(R.id.orderToDeliver);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -231,9 +244,6 @@ public class OrderDetailFragment extends Fragment {
                         Utils.showMessage(view,"Error, try again later",Utils.WARNING);
                     }
                 });
-//                end();
-
-
             }
         });
 
@@ -241,7 +251,4 @@ public class OrderDetailFragment extends Fragment {
 
     }
 
-    public void end() {
-                getActivity().onBackPressed();
-    }
 }

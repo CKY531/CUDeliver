@@ -25,11 +25,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import edu.cuhk.cudeliver.databinding.ActivityOrderBinding;
 import model.Order;
 
 public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder>  {
     private Context context;
     private LayoutInflater mInflater;
+
+    //ActivityOrderBinding
+    private ActivityOrderBinding orderBinding;
 
     private LinkedList<Order> mOrderInfoList;
 
@@ -85,7 +89,6 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
                             break;
                     }
                     transaction.replace(R.id.orderFragLayout, fragment);
-                    transaction.addToBackStack(null);
                     transaction.commit();
 
                 }
@@ -102,6 +105,7 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
         this.mOrderInfoList = mOrderInfoList;
         this.caller = caller;
     }
+
 
     @NonNull
     @Override
