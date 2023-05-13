@@ -207,7 +207,7 @@ public class OrderOrderDetailFragment extends Fragment {
                 if (order.getStatus().equals("pending")){
                     orderRef.child(order.getId()).removeValue();
                 }else {
-                    usersRef.child(order.getOrderCreator()).child("myJobs").child(order.getId()).child("status").setValue("Completed");
+                    usersRef.child(order.getOrderDeliver()).child("myJobs").child(order.getId()).child("status").setValue("Completed");
                 }
                 Utils.showMessage(view,"Order Completed",Utils.MESSAGE);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
