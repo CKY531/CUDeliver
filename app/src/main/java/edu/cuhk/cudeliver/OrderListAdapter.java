@@ -64,7 +64,6 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
                 public void onClick(View v) {
 //                     Get the position of the item that was clicked.
                     int position = getLayoutPosition();
-                    Toast.makeText(v.getContext(), "Position " + position + " is clicked", Toast.LENGTH_SHORT).show();
                     Fragment fragment = OrderDetailFragment.newInstance(mOrderInfoList.get(position));
 
                     AppCompatActivity act = (AppCompatActivity) v.getContext();
