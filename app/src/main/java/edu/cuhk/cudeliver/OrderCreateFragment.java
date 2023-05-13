@@ -302,6 +302,18 @@ public class OrderCreateFragment extends Fragment {
 
                 Log.i("TAG", "Clicked the submit button!!!");
 
+                //Validation of starting and destination need to do first, otherwise program crashes
+                String startName = createBinding.textCreateStartLocation.getText().toString();
+                String destinationName = createBinding.textCreateDestination.getText().toString();
+                if (TextUtils.isEmpty(startName)) {
+                    Utils.showMessage(view,"Please choose starting location in the map",Utils.WARNING);
+                    return;
+                }
+                if (TextUtils.isEmpty(destinationName)) {
+                    Utils.showMessage(view,"Please choose Destination in the map",Utils.WARNING);
+                    return;
+                }
+
                 List<Double> latArr = arrListToLatArr(routePoints);
                 List<Double> lngArr = arrListToLngArr(routePoints);
 
@@ -312,8 +324,6 @@ public class OrderCreateFragment extends Fragment {
                 double destinationLong = points.get(1).longitude;
                 String title = createBinding.textCreateTitle.getText().toString();
                 String description = createBinding.textDescription.getText().toString();
-                String startName = createBinding.textCreateStartLocation.getText().toString();
-                String destinationName = createBinding.textCreateDestination.getText().toString();
                 String expiryTime = createBinding.textExpiryTime.getText().toString();
                 String expiryDate = createBinding.textExpiryDate.getText().toString();
                 String contact = createBinding.contact.getText().toString();
@@ -322,17 +332,6 @@ public class OrderCreateFragment extends Fragment {
                 String status = "Pending";
 
                 // input validation
-                Log.i("TAG","OKKKKK");
-//                Log.i("TAG", "start:"+startName);
-//                if (TextUtils.isEmpty(startName)) {
-//                    Log.i("TAG", "Enter Empty start!!!");
-//                    Utils.showMessage(view,"Please choose starting location in the map",Utils.WARNING);
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(createBinding.textCreateDestination.getText().toString())) {
-//                    Utils.showMessage(view,"Please choose Destination in the map",Utils.WARNING);
-//                    return;
-//                }
                 if(title.length() == 0) {
                     Utils.showMessage(view,"Please input title",Utils.WARNING);
                     return;
