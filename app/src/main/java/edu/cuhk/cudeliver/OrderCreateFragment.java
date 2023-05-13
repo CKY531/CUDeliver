@@ -170,7 +170,7 @@ public class OrderCreateFragment extends Fragment {
         createBinding = FragmentOrderCreateBinding.inflate(inflater, container, false);
         Calendar calendar = Calendar.getInstance();
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int currentMinute = calendar.get(Calendar.MINUTE);
+        int currentMinute = calendar.get(Calendar.MINUTE)+5;
         int currentYear = calendar.get(Calendar.YEAR);
         int currentMonth= calendar.get(Calendar.MONTH)+1;
         int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -218,7 +218,7 @@ public class OrderCreateFragment extends Fragment {
                 int d1,d2;
                 try {
                     date = sdf.parse(createBinding.textExpiryTime.getText().toString());
-                    d2 = date.getMinutes();
+                    d2 = date.getMinutes()+5;
                     d1 = date.getHours();
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
