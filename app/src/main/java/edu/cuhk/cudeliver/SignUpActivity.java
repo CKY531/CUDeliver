@@ -107,6 +107,7 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onSuccess(Void unused) {
                                 progressDialog.hide();
                                 Utils.showMessage(contentView,"Successfully signed up, going to login page...",Utils.MESSAGE);
+                                auth.signOut();
                                 //timeout
                                 new android.os.Handler(Looper.getMainLooper()).postDelayed(
                                         new Runnable() {
