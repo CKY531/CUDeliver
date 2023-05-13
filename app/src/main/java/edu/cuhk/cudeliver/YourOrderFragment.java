@@ -94,7 +94,7 @@ public class YourOrderFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_order_display, container, false);
         // setup recyclerview
         mRecyclerView = view.findViewById(R.id.order_list);
-        mAdapter = new OrderListAdapter(getContext(), mOrderInfoList);
+        mAdapter = new OrderListAdapter(getContext(), mOrderInfoList,Utils.ORDER);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();

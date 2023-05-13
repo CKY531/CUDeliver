@@ -32,6 +32,10 @@ public class Utils {
     public static final int CAUTION = 2;
     public static final int NEUTRAL = 3;
 
+    public static final int DELIVER = 0;
+    public static final int ORDER = 1;
+    public static final int DISPLAY = 2;
+
 
     public static void inputValidate(String email,String phone,String password1, String password2) throws Exception {
         if (email.length() == 0) {

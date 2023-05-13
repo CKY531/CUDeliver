@@ -91,7 +91,7 @@ public class OrderDisplayFragment extends Fragment {
 //                android.R.color.holo_blue_dark);
         // setup recyclerview
         mRecyclerView = view.findViewById(R.id.order_list);
-        mAdapter = new OrderListAdapter(getContext(), mOrderInfoList);
+        mAdapter = new OrderListAdapter(getContext(), mOrderInfoList,Utils.DISPLAY);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();

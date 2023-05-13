@@ -33,6 +33,8 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
 
     private LinkedList<Order> mOrderInfoList;
 
+    private int caller;
+
     class OrderViewHolder extends RecyclerView.ViewHolder {
 
 //        ImageView flowerImageItemView;
@@ -66,11 +68,22 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
                 public void onClick(View v) {
 //                     Get the position of the item that was clicked.
                     int position = getLayoutPosition();
-                    Fragment fragment = OrderDetailFragment.newInstance(mOrderInfoList.get(position));
+                    Fragment fragment;
+                    Log.d("CALL","CALLER: "+caller);
 
                     AppCompatActivity act = (AppCompatActivity) v.getContext();
                     FragmentTransaction transaction = act.getSupportFragmentManager().beginTransaction();
-
+                    switch (caller){
+                        case Utils.ORDER:
+                            fragment = OrderOrderDetailFragment.newInstance(mOrderInfoList.get(position));
+                            break;
+                        case Utils.DELIVER:
+                            fragment = DeliverOrderDetailFragment.newInstance(mOrderInfoList.get(position));
+                            break;
+                        default:
+                            fragment = OrderDetailFragment.newInstance(mOrderInfoList.get(position));
+                            break;
+                    }
                     transaction.replace(R.id.orderFragLayout, fragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -84,9 +97,10 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
     }
 
     public OrderListAdapter(Context context,
-                            LinkedList<Order> mOrderInfoList) {
+                            LinkedList<Order> mOrderInfoList,int caller) {
         mInflater = LayoutInflater.from(context);
         this.mOrderInfoList = mOrderInfoList;
+        this.caller = caller;
     }
 
     @NonNull
@@ -115,6 +129,7 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
         // Set up View items for this row (position), modify to show correct information read from the CSV
         holder.mStatus.setText(status);
         if (status.equals("delivering")) holder.mStatus.setTextColor(Color.RED);
+        else if (status.equals("completed")) holder.mStatus.setTextColor(Color.GREEN);
         holder.mPrice.setText("$"+String.valueOf(price));
         holder.mTitle.setText(title);
         holder.mExpiry.setText(expiry);
