@@ -218,7 +218,7 @@ public class OrderCreateFragment extends Fragment {
                 int d1,d2;
                 try {
                     date = sdf.parse(createBinding.textExpiryTime.getText().toString());
-                    d2 = date.getMinutes()+5;
+                    d2 = (date.getMinutes()+5>59)?date.getMinutes()-55:date.getMinutes()+5;
                     d1 = date.getHours();
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
@@ -531,8 +531,8 @@ public class OrderCreateFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<LatLng> latLngs) {
             //Draw the route
-            Log.i("TAG", "Arrive Draw !!!!!!");
-            Log.i("TAG", "Length of LATLNG:"+latLngs.size());
+//            Log.i("TAG", "Arrive Draw !!!!!!");
+//            Log.i("TAG", "Length of LATLNG:"+latLngs.size());
             routePoints = latLngs;
             PolylineOptions polylineOptions = new PolylineOptions();
 

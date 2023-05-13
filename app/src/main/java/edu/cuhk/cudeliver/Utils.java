@@ -110,7 +110,7 @@ public class Utils {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String id = postSnapshot.getKey();
                     Order order = postSnapshot.getValue(Order.class);
-                    if (order.getStatus().equals("Expired")) break;
+                    if (!order.getStatus().equals("pending")) break;
 
                     Calendar calendar = Calendar.getInstance();
                     Date currentDate = calendar.getTime();

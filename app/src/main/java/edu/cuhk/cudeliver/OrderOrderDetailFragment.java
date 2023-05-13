@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -202,34 +203,46 @@ public class OrderOrderDetailFragment extends Fragment {
         fDetailBinding.completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                usersRef.child(mAuth.getCurrentUser().getUid()).child("myOrders").child(order.getId()).child("status").setValue("completed");
+                usersRef.child(mAuth.getCurrentUser().getUid()).child("myOrders").child(order.getId()).child("status").setValue("Completed");
+                if (order.getStatus().equals("pending")){
+                    orderRef.child(order.getId()).removeValue();
+                }else {
+                    usersRef.child(order.getOrderCreator()).child("myJobs").child(order.getId()).child("status").setValue("Completed");
+                }
+                Utils.showMessage(view,"Order Completed",Utils.MESSAGE);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction fTran = fm.beginTransaction();
+                fTran.replace(R.id.orderFragLayout, new YourOrderFragment(),"yourOrder");
+                fTran.commit();
 
-                orderRef.child(order.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.i("TAG", "Order Id:" + order.getId());
-                        Log.i("TAG", "User Id:" + mAuth.getCurrentUser().getUid());
-                        if(dataSnapshot.exists()){
-                            orderRef.child(order.getId()).removeValue();
-                        }else {
-                            //Change deliver's status
-                            usersRef.child(order.getOrderCreator()).child("myJobs").child(order.getId()).child("status").setValue("completed").addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-
-                                }
-                            });
-                        }
-                        Utils.showMessage(view,"Order Completed",Utils.MESSAGE);
-                        FragmentManager fm = getActivity().getSupportFragmentManager();
-                        fm.popBackStack();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+//                orderRef.child(order.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        Log.i("TAG", "Order Id:" + order.getId());
+//                        Log.i("TAG", "User Id:" + mAuth.getCurrentUser().getUid());
+//                        if(dataSnapshot.exists()){
+//                            orderRef.child(order.getId()).removeValue();
+//                            Utils.showMessage(view,"Order will be removed",Utils.MESSAGE);
+//                            FragmentManager fm = getActivity().getSupportFragmentManager();
+//                            fm.popBackStack();
+//                        }else {
+//                            //Change deliver's status
+//                            usersRef.child(order.getOrderCreator()).child("myJobs").child(order.getId()).child("status").setValue("completed").addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void unused) {
+//                                    Utils.showMessage(view,"Order Completed",Utils.MESSAGE);
+//                                    FragmentManager fm = getActivity().getSupportFragmentManager();
+//                                    fm.popBackStack();
+//                                }
+//                            });
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
 
 
             }

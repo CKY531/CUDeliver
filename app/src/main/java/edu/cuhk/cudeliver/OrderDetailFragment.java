@@ -86,9 +86,8 @@ public class OrderDetailFragment extends Fragment {
                 }
             });
 
-    public OrderDetailFragment(ActivityOrderBinding incomingBinding) {
+    public OrderDetailFragment() {
         // Required empty public constructor
-        orderBinding = incomingBinding;
     }
 
     /**
@@ -98,8 +97,8 @@ public class OrderDetailFragment extends Fragment {
      * @return A new instance of fragment OrderDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OrderDetailFragment newInstance(Order thisOrder, ActivityOrderBinding incomingBinding) {
-        OrderDetailFragment fragment = new OrderDetailFragment(incomingBinding);
+    public static OrderDetailFragment newInstance(Order thisOrder) {
+        OrderDetailFragment fragment = new OrderDetailFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         order = thisOrder;
@@ -128,8 +127,8 @@ public class OrderDetailFragment extends Fragment {
         fDetailBinding = FragmentOrderDetailBinding.inflate(inflater, container, false);
         Calendar calendar = Calendar.getInstance();
 
-        //Check if ActivityOrderBinding pass or not, if pass, it is in OrderDisplayFragment, display accept button
-        if (orderBinding == null) {
+        //Check if same user , no accept button
+        if (order.getOrderCreator().equals(mAuth.getCurrentUser().getUid())) {
             //Set accept button to invisible
             fDetailBinding.acceptButton.setVisibility(View.GONE);
         }
@@ -219,14 +218,14 @@ public class OrderDetailFragment extends Fragment {
                 //Update the status and remove from order chile
                 HashMap<String, Object> updateOrder = new HashMap<>();
                 orderRef.child(order.getId()).removeValue();
-                order.setStatus("delivering");
+                order.setStatus("Delivering");
 
                 //Add to my deliver
                 HashMap<String, Object> updateUser = new HashMap<>();
                 updateUser.put("myJobs", order);
                 Log.i("TAG", "Order Id:" + order.getId());
                 Log.i("TAG", "User Id:" + mAuth.getCurrentUser().getUid());
-                usersRef.child(order.getOrderCreator()).child("myOrders").child(order.getId()).child("status").setValue("delivering");
+                usersRef.child(order.getOrderCreator()).child("myOrders").child(order.getId()).child("status").setValue("Delivering");
                 usersRef.child(mAuth.getCurrentUser().getUid()).child("myJobs").child(order.getId()).setValue(order).addOnSuccessListener(
                         new OnSuccessListener<Void>() {
                             @Override
@@ -234,9 +233,8 @@ public class OrderDetailFragment extends Fragment {
                                 Utils.showMessage(view,"Order accepted",Utils.MESSAGE);
                                 FragmentManager fm = getActivity().getSupportFragmentManager();
                                 FragmentTransaction fTran = fm.beginTransaction();
-                                fTran.replace(R.id.orderFragLayout, new OrderToDeliverFragment());
+                                fTran.replace(R.id.orderFragLayout, new OrderToDeliverFragment(),"orderToDeliver");
                                 fTran.commit();
-                                orderBinding.bottomNavigationView.setSelectedItemId(R.id.orderToDeliver);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override

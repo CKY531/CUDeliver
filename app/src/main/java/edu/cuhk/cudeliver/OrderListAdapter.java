@@ -131,9 +131,9 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
 
 
         // Set up View items for this row (position), modify to show correct information read from the CSV
+        if (status.equals("Delivering")) holder.mStatus.setTextColor(Color.RED);
+        else if (status.equals("Completed")) holder.mStatus.setTextColor(Color.GREEN);
         holder.mStatus.setText(status);
-        if (status.equals("delivering")) holder.mStatus.setTextColor(Color.RED);
-        else if (status.equals("completed")) holder.mStatus.setTextColor(Color.GREEN);
         holder.mPrice.setText("$"+String.valueOf(price));
         holder.mTitle.setText(title);
         holder.mExpiry.setText(expiry);

@@ -53,13 +53,12 @@ public class OrderDisplayFragment extends Fragment {
     FirebaseAuth auth;
     DatabaseReference users;
     DatabaseReference orders;
-    public OrderDisplayFragment(ActivityOrderBinding incomingOrderbinding) {
+    public OrderDisplayFragment() {
         // Required empty public constructor
-        orderbinding = incomingOrderbinding;
     }
 
-    public static OrderDisplayFragment newInstance(ActivityOrderBinding aOrderBinding) {
-        OrderDisplayFragment fragment = new OrderDisplayFragment(aOrderBinding);
+    public static OrderDisplayFragment newInstance(String param1, String param2) {
+        OrderDisplayFragment fragment = new OrderDisplayFragment();
         Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
