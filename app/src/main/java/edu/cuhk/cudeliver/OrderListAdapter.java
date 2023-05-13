@@ -2,6 +2,8 @@ package edu.cuhk.cudeliver;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,12 +114,13 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
 
         // Set up View items for this row (position), modify to show correct information read from the CSV
         holder.mStatus.setText(status);
+        if (status.equals("delivering")) holder.mStatus.setTextColor(Color.RED);
         holder.mPrice.setText("$"+String.valueOf(price));
         holder.mTitle.setText(title);
         holder.mExpiry.setText(expiry);
         Calendar calendar = Calendar.getInstance();
         Date currentDate = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/ddhh : mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/ddHH : mm");
         try {
             Date date = sdf.parse(expiryDate+expiry);
             if (date.getTime() - currentDate.getTime() >= 82800000) holder.mExpiry.setText("> 1 day");

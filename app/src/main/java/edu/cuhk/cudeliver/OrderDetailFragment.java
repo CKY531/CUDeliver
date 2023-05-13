@@ -216,8 +216,9 @@ public class OrderDetailFragment extends Fragment {
                 updateUser.put("myJobs", order);
                 Log.i("TAG", "Order Id:" + order.getId());
                 Log.i("TAG", "User Id:" + mAuth.getCurrentUser().getUid());
+                usersRef.child(order.getOrderCreator()).child("myOrders").child(order.getId()).child("status").setValue("delivering");
                 usersRef.child(mAuth.getCurrentUser().getUid()).child("myJobs").child(order.getId()).setValue(order).addOnSuccessListener(
-                        new OnSuccessListener<Void>() { 
+                        new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Utils.showMessage(view,"Order accepted",Utils.MESSAGE);
