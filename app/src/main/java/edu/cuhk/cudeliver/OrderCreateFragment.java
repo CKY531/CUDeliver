@@ -329,7 +329,7 @@ public class OrderCreateFragment extends Fragment {
                 String contact = createBinding.contact.getText().toString();
                 String orderCreator = mAuth.getCurrentUser().getUid();
                 String orderDeliver = "";
-                String status = "Pending";
+                String status = "pending";
 
                 // input validation
                 if(title.length() == 0) {
