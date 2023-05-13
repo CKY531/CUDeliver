@@ -68,8 +68,6 @@ public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLay
 
     static User currentUser;
 
-
-
     ProgressDialog progressDialog;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -85,7 +83,7 @@ public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLay
         setContentView(orderBinding.getRoot());
         contentView = findViewById(android.R.id.content);
         auth = FirebaseAuth.getInstance();
-        replaceFrag(new OrderDisplayFragment(),"orderList");
+        replaceFrag(new OrderDisplayFragment(orderBinding),"orderList");
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(true);
         progressDialog.setMessage("Updating...");
@@ -143,7 +141,7 @@ public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLay
                     replaceFrag(new OrderCreateFragment(),"create");
                     break;
                 case R.id.orderList:
-                    replaceFrag(new OrderDisplayFragment(),"orderList");
+                    replaceFrag(new OrderDisplayFragment(orderBinding),"orderList");
                     break;
                 case R.id.yourOrder:
                     replaceFrag(new YourOrderFragment(),"yourOrder");
@@ -296,7 +294,7 @@ public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLay
              return;
          }
         if (tag.equals("orderList")){
-            replaceFrag(new OrderDisplayFragment(),"orderList");
+            replaceFrag(new OrderDisplayFragment(orderBinding),"orderList");
             return;
         }
         if (tag.equals("yourOrder")){
@@ -315,4 +313,9 @@ public class OrderActivity extends AppCompatActivity  implements SwipeRefreshLay
     public void enableSwipe(){
         mSwipeRefreshLayout.setEnabled(true);
     }
+
+    //To output its view binding
+//    public static void setSelectDeliver() {
+//        orderBinding.bottomNavigationView.setSelectedItemId(R.id.orderToDeliver);
+//    }
 }

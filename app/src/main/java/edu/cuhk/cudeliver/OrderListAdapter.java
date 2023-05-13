@@ -25,11 +25,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import edu.cuhk.cudeliver.databinding.ActivityOrderBinding;
 import model.Order;
 
 public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder>  {
     private Context context;
     private LayoutInflater mInflater;
+
+    //ActivityOrderBinding
+    private ActivityOrderBinding orderBinding;
 
     private LinkedList<Order> mOrderInfoList;
 
@@ -66,13 +70,12 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
                 public void onClick(View v) {
 //                     Get the position of the item that was clicked.
                     int position = getLayoutPosition();
-                    Fragment fragment = OrderDetailFragment.newInstance(mOrderInfoList.get(position));
+                    Fragment fragment = OrderDetailFragment.newInstance(mOrderInfoList.get(position), orderBinding);
 
                     AppCompatActivity act = (AppCompatActivity) v.getContext();
                     FragmentTransaction transaction = act.getSupportFragmentManager().beginTransaction();
 
                     transaction.replace(R.id.orderFragLayout, fragment);
-                    transaction.addToBackStack(null);
                     transaction.commit();
 
                 }
@@ -87,6 +90,12 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
                             LinkedList<Order> mOrderInfoList) {
         mInflater = LayoutInflater.from(context);
         this.mOrderInfoList = mOrderInfoList;
+    }
+
+    public OrderListAdapter(Context context, LinkedList<Order> mOrderInfoList, ActivityOrderBinding incomingBinding) {
+        mInflater = LayoutInflater.from(context);
+        this.mOrderInfoList = mOrderInfoList;
+        this.orderBinding = incomingBinding;
     }
 
     @NonNull

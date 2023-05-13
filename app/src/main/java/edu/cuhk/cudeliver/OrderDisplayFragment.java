@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
+import edu.cuhk.cudeliver.databinding.ActivityOrderBinding;
 import model.Order;
 
 /**
@@ -39,10 +40,9 @@ import model.Order;
  */
 public class OrderDisplayFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    //View Binding of Order Activity to pass
+    ActivityOrderBinding orderbinding;
 
-    // TODO: Rename and change types of parameters
     private RecyclerView mRecyclerView;
     private OrderListAdapter mAdapter;
 
@@ -53,12 +53,13 @@ public class OrderDisplayFragment extends Fragment {
     FirebaseAuth auth;
     DatabaseReference users;
     DatabaseReference orders;
-    public OrderDisplayFragment() {
+    public OrderDisplayFragment(ActivityOrderBinding incomingOrderbinding) {
         // Required empty public constructor
+        orderbinding = incomingOrderbinding;
     }
 
-    public static OrderDisplayFragment newInstance(String param1, String param2) {
-        OrderDisplayFragment fragment = new OrderDisplayFragment();
+    public static OrderDisplayFragment newInstance(ActivityOrderBinding aOrderBinding) {
+        OrderDisplayFragment fragment = new OrderDisplayFragment(aOrderBinding);
         Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
@@ -91,7 +92,7 @@ public class OrderDisplayFragment extends Fragment {
 //                android.R.color.holo_blue_dark);
         // setup recyclerview
         mRecyclerView = view.findViewById(R.id.order_list);
-        mAdapter = new OrderListAdapter(getContext(), mOrderInfoList);
+        mAdapter = new OrderListAdapter(getContext(), mOrderInfoList, orderbinding);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();

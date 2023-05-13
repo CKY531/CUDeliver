@@ -54,8 +54,8 @@ public class YourOrderFragment extends Fragment{
         // Required empty public constructor
     }
 
-    public static OrderDisplayFragment newInstance(String param1, String param2) {
-        OrderDisplayFragment fragment = new OrderDisplayFragment();
+    public static YourOrderFragment newInstance(String param1, String param2) {
+        YourOrderFragment fragment = new YourOrderFragment();
         Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
