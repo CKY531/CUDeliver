@@ -110,7 +110,7 @@ public class Utils {
 
                     Calendar calendar = Calendar.getInstance();
                     Date currentDate = calendar.getTime();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh : mm");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH : mm");
                     try {
                         Date date = sdf.parse(order.getExpiryDate() + " " + order.getExpiryTime());
                         if (date.compareTo(currentDate) <= 0) {

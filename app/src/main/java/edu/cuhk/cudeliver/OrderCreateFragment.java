@@ -213,7 +213,7 @@ public class OrderCreateFragment extends Fragment {
         createBinding.textExpiryTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleDateFormat sdf = new SimpleDateFormat("hh : mm");
+                SimpleDateFormat sdf = new SimpleDateFormat("HH : mm");
                 Date date;
                 int d1,d2;
                 try {
