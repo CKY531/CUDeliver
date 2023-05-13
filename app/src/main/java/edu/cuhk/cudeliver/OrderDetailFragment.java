@@ -90,6 +90,10 @@ public class OrderDetailFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public OrderDetailFragment(ActivityOrderBinding incomingBinding) {
+        orderBinding = incomingBinding;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -97,8 +101,8 @@ public class OrderDetailFragment extends Fragment {
      * @return A new instance of fragment OrderDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OrderDetailFragment newInstance(Order thisOrder) {
-        OrderDetailFragment fragment = new OrderDetailFragment();
+    public static OrderDetailFragment newInstance(Order thisOrder, ActivityOrderBinding incomingBinding) {
+        OrderDetailFragment fragment = new OrderDetailFragment(incomingBinding);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         order = thisOrder;
@@ -219,6 +223,7 @@ public class OrderDetailFragment extends Fragment {
                 HashMap<String, Object> updateOrder = new HashMap<>();
                 orderRef.child(order.getId()).removeValue();
                 order.setStatus("Delivering");
+                order.setOrderDeliver(mAuth.getCurrentUser().getUid());
 
                 //Add to my deliver
                 HashMap<String, Object> updateUser = new HashMap<>();
@@ -235,6 +240,7 @@ public class OrderDetailFragment extends Fragment {
                                 FragmentTransaction fTran = fm.beginTransaction();
                                 fTran.replace(R.id.orderFragLayout, new OrderToDeliverFragment(),"orderToDeliver");
                                 fTran.commit();
+                                orderBinding.bottomNavigationView.setSelectedItemId(R.id.orderToDeliver);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override

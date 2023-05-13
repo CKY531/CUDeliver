@@ -85,7 +85,7 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
                             fragment = DeliverOrderDetailFragment.newInstance(mOrderInfoList.get(position));
                             break;
                         default:
-                            fragment = OrderDetailFragment.newInstance(mOrderInfoList.get(position));
+                            fragment = OrderDetailFragment.newInstance(mOrderInfoList.get(position), orderBinding);
                             break;
                     }
                     transaction.replace(R.id.orderFragLayout, fragment);
@@ -97,6 +97,14 @@ public class OrderListAdapter extends Adapter<OrderListAdapter.OrderViewHolder> 
 
             // End of ViewHolder initialization
         }
+    }
+
+    public OrderListAdapter(Context context,
+                            LinkedList<Order> mOrderInfoList,int caller, ActivityOrderBinding incomingBinding) {
+        mInflater = LayoutInflater.from(context);
+        this.mOrderInfoList = mOrderInfoList;
+        this.caller = caller;
+        this.orderBinding = incomingBinding;
     }
 
     public OrderListAdapter(Context context,

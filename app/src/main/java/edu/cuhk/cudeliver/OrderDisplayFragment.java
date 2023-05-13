@@ -57,11 +57,13 @@ public class OrderDisplayFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public OrderDisplayFragment(ActivityOrderBinding incomingBinding) {
+        orderbinding = incomingBinding;
+    }
+
     public static OrderDisplayFragment newInstance(String param1, String param2) {
         OrderDisplayFragment fragment = new OrderDisplayFragment();
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -91,7 +93,7 @@ public class OrderDisplayFragment extends Fragment {
 //                android.R.color.holo_blue_dark);
         // setup recyclerview
         mRecyclerView = view.findViewById(R.id.order_list);
-        mAdapter = new OrderListAdapter(getContext(), mOrderInfoList,Utils.DISPLAY);
+        mAdapter = new OrderListAdapter(getContext(), mOrderInfoList,Utils.DISPLAY, orderbinding);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
