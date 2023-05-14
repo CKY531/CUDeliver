@@ -231,6 +231,7 @@ public class OrderDetailFragment extends Fragment {
                 Log.i("TAG", "Order Id:" + order.getId());
                 Log.i("TAG", "User Id:" + mAuth.getCurrentUser().getUid());
                 usersRef.child(order.getOrderCreator()).child("myOrders").child(order.getId()).child("status").setValue("Delivering");
+                usersRef.child(order.getOrderCreator()).child("myOrders").child(order.getId()).child("orderDeliver").setValue(mAuth.getCurrentUser().getUid());
                 usersRef.child(mAuth.getCurrentUser().getUid()).child("myJobs").child(order.getId()).setValue(order).addOnSuccessListener(
                         new OnSuccessListener<Void>() {
                             @Override
